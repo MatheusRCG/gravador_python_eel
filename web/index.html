@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Recorder</title>
+    <script src="/eel.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Screen Recorder</h1>
+    <label for="output_file">Output File:</label>
+    <input type="text" id="output_file" value="teste"><br><br>
+    <label for="fps">FPS:</label>
+    <input type="number" id="fps" value="30"><br><br>
+    <label for="width">Width:</label>
+    <input type="number" id="width" value="1920"><br><br>
+    <label for="height">Height:</label>
+    <input type="number" id="height" value="1080"><br><br>
+    
+    <button class="btn" onclick="startRecording()">Start Recording</button>
+    <button onclick="stopRecording()">Stop Recording</button>
+    <button onclick="takeScreenshot()">Take Screenshot</button>
+    <script>
+        async function startRecording() {
+            console.log("Start recording clicked");
+            var output_file = document.getElementById("output_file").value;
+            var fps = parseInt(document.getElementById("fps").value);
+            var width = parseInt(document.getElementById("width").value);
+            var height = parseInt(document.getElementById("height").value);
+
+            await eel.start_recording(output_file, fps, width, height)();
+        }
+
+        async function stopRecording() {
+            console.log("Stop recording clicked");
+            await eel.stop_recording()();
+        }
+        
+        async function takeScreenshot() {
+            var output_file = document.getElementById("output_file").value;
+            await eel.take_screenshot(output_file)();
+        }
+    </script>
+</body>
+</html>
