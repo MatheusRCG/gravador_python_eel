@@ -14,14 +14,14 @@ start_x, start_y, end_x, end_y = None, None, None, None
 @eel.expose
 def record_screen(output_file, fps, width, height):
     print("gravando")
-    global recording
+    global recording, x1, y1, x2, y2
     recording = True
     # Definindo o codec e criando um objeto VideoWriter
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     out = cv2.VideoWriter((output_file + '.avi'), fourcc, fps, (width, height))
 
     while recording:
-        # Captura de tela usando pyautogui
+        # Captura de tela usando pyautogui - region=(x1, y1, x2-x1, y2-y1)
         img = pyautogui.screenshot()
 
         # Convertendo a imagem para um array numpy
@@ -65,11 +65,6 @@ def onMouseUp(x, y):
     end_x = x
     end_y = y
 
-def draw_selection_rectangle(x1, x2, y1, y2):
-    #global start_x, start_y, end_x, end_y
-
-    # Desenhe um retângulo na tela
-    cv2.rectangle(frame, (start_x, start_y), (end_x, end_y), (0, 255, 0), 2)
 
 @eel.expose
 def take_screenshot(output_file):
@@ -89,6 +84,8 @@ def selecionar_pontos():
     Uma tupla com as posições dos dois pontos (x1, y1, x2, y2).
   """
   print("func exec")
+
+  global x1, y1, x2, y2
 
   # Obter a resolução da tela
   largura, altura = pyautogui.size()
